@@ -1,0 +1,10 @@
+<head>
+    <title></title>
+    <link rel="stylesheet" href="/css/all.css">
+</head>
+
+<body>
+    <div class="flex--center">
+        <div class="logo-block" />
+    </div>
+</body>
