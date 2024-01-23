@@ -9,7 +9,8 @@
     "module": "commonjs",
     "baseUrl": ".", 
     "paths": {
-      "@utils/*": ["./src/utils/*"]
+      "@utils/*": ["./src/utils/*"],
+      "@web/*": ["./src/web/*"]
     },
 
     "outDir": "./dist",  

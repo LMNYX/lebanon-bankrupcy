@@ -1,6 +1,9 @@
 import Output from "@utils/output";
 import { convertCurrency } from "@utils/currency";
 import { clickForPalestine } from "@utils/lebanon";
+import { Server } from "@web/server";
+
+const server: Server = new Server();
 
 Output.Log("Starting lebanon attack center...");
 
@@ -10,9 +13,20 @@ let threads = [];
 
 async function clickerThread()
 {
-    await clickForPalestine();
-    currentBank++;
-    Output.Log(`${('+' + lbpWorth + ' USD').red} :: Total ${currentBank.toString().red} LBP (${currentBank * lbpWorth} USD)`);
+    Output.Log(`Thread #${threads.length} started...`);
+    while (true)
+    {
+        try
+        {
+            await clickForPalestine();
+            currentBank++;
+            Output.Log(`${('+' + lbpWorth + ' USD').red} :: Total ${currentBank.toString().red} LBP (${currentBank * lbpWorth} USD)`);
+        }
+        catch {
+            Output.Warn("Goofy ahh arab website, unstable ass, just wait a lil bit lul...");
+            continue;
+        }
+    }
 }
 
 (async ()=>
@@ -35,9 +49,18 @@ async function clickerThread()
 
     currentBank = 0;
 
-    let amountOfThreads = 5;
+    let amountOfThreads = 15;
 
     for (let i = 0; i < amountOfThreads; i++)
-        threads.push(setInterval(clickerThread, 1333));
+        clickerThread();
+
+    server.app.get('/api/get-worth', (req: any, res: any) => {
+        res.send({
+            "bank": currentBank,
+            "lbpWorth": lbpWorth,
+            "inDollars": currentBank * lbpWorth
+        });
+    });
+    server.start();
 
 })().catch(Output.Error);
