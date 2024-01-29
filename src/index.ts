@@ -11,16 +11,16 @@ let currentBank = 0;
 let lbpWorth = 0;
 let threads = [];
 
-async function clickerThread()
+async function clickerThread(trId: number)
 {
-    Output.Log(`Thread #${threads.length} started...`);
+    Output.Log(`Thread #${trId} started...`);
     while (true)
     {
         try
         {
             await clickForPalestine();
             currentBank++;
-            Output.Log(`${('+' + lbpWorth + ' USD').red} :: Total ${currentBank.toString().red} LBP (${currentBank * lbpWorth} USD)`);
+            Output.Log(`tr${trId}:: ${('+' + lbpWorth + ' USD').red} :: Total ${currentBank.toString().red} LBP (${currentBank * lbpWorth} USD)`);
         }
         catch {
             Output.Warn("Goofy ahh arab website, unstable ass, just wait a lil bit lul...");
@@ -49,10 +49,10 @@ async function clickerThread()
 
     currentBank = 0;
 
-    let amountOfThreads = 15;
+    let amountOfThreads = 300;
 
     for (let i = 0; i < amountOfThreads; i++)
-        clickerThread();
+        clickerThread(i);
 
     server.app.get('/api/get-worth', (req: any, res: any) => {
         res.send({

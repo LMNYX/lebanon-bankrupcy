@@ -25,7 +25,7 @@ export class Server
         this.output.Log("Starting server...");
         await this.addRoutes();
         // TO-OD: Replace port with ENV
-        this.app.listen(3000, () => this.output.Log("Server started!"));
+        this.app.listen(3000, () => this.output.Log("Server started at http://127.0.0.1:3000 !"));
     }
 
     public async addRoutes()
